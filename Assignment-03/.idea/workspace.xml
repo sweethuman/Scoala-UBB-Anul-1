@@ -2,6 +2,25 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="41d7c84d-74c2-4f03-b031-5d7b5c8eb3ee" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../Assignment06-08/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Assignment06-08/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Assignment06-08/.idea/Assignment06-08.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Assignment06-08/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Assignment06-08/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Assignment06-08/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Assignment06-08/.idea/mypy.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Assignment06-08/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Assignment06-08/discipline.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Assignment06-08/discipline_manager.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Assignment06-08/errors.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Assignment06-08/grade.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Assignment06-08/grade_manager.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Assignment06-08/main.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Assignment06-08/mypy.ini" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Assignment06-08/services.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Assignment06-08/student.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Assignment06-08/student_manager.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Assignment06-08/ui.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -30,10 +49,11 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last.edited.regexp" value="frame" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Assignment-02" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -102,7 +122,12 @@
   <component name="ServiceViewManager">
     <option name="viewStates">
       <list>
-        <serviceView />
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
       </list>
     </option>
   </component>
@@ -150,6 +175,7 @@
       <workItem from="1572526795450" duration="26000" />
       <workItem from="1572526839647" duration="710000" />
       <workItem from="1572701105739" duration="65000" />
+      <workItem from="1574094089326" duration="18000" />
     </task>
     <servers />
   </component>
