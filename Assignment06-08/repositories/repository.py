@@ -17,12 +17,18 @@ class Repository(Generic[RepoType, KeyType]):
             return self.__items[key]
         raise RepositoryError("Element with given key doesn't exist")
 
+    def exists_element(self, key: KeyType) -> bool:
+        if self.__items.get(key):
+            return True
+        else:
+            return False
+
     def add_element(self, element: RepoType):
         self.__items[self.__key(element)] = element
 
-    def remove_element(self, key: KeyType):
+    def remove_element(self, key: KeyType) -> RepoType:
         if self.__items.get(key):
-            self.__items.pop(key)
+            return self.__items.pop(key)
         else:
             raise RepositoryError("Element with given key doesn't exist")
 

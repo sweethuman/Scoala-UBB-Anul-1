@@ -4,34 +4,33 @@ from typing import Dict, List
 from errors import DuplicateIdError, MissingIdError
 from structures import FunctionCall, Operation
 from structures.student import Student
+from repositories import Repository
 
 
 class StudentManager:
-    def __init__(self):
-        self.__students: Dict[int, Student] = OrderedDict()
+    def __init__(self, repository: Repository[Student, int]):
+        self.__repository = repository
 
-    def add_student(self, student: Student):
+    def add_student(self, student: Student) -> Operation:
         """
         Adds a student, if id already exists throws a L{DuplicateIdError}
         @param student: The Student you want to add
         """
-        if self.__students.get(student.id) is not None:
+        if self.__repository.exists_element(student.id) is True:
             raise DuplicateIdError("Student Id already exists")
-        self.__students[student.id] = student
-
-        self.__students = OrderedDict(sorted(self.__students.items(), key=lambda t: t[0]))
+        self.__repository.add_element(student)
         undo = FunctionCall(self.remove_student, student.id)
         redo = FunctionCall(self.add_student, student)
         return Operation(undo, redo)
 
-    def remove_student(self, student_id: int):
+    def remove_student(self, student_id: int) -> Operation:
         """
         Removes a id, if id doesn't exist it throws a L{MissingIdError}
         @param student_id: The Student object with the id you want to remove
         """
-        if self.__students.get(student_id) is None:
+        if self.__repository.exists_element(student_id) is False:
             raise MissingIdError("Student with given id does not exist")
-        student = self.__students.pop(student_id)
+        student = self.__repository.remove_element(student_id)
         undo = FunctionCall(self.add_student, student)
         redo = FunctionCall(self.remove_student, student_id)
         return Operation(undo, redo)
@@ -42,9 +41,17 @@ class StudentManager:
         @param student_id: The Student with the id you want to remove
         @return: The Student Object
         """
-        if self.__students.get(student_id) is None:
+        if self.__repository.exists_element(student_id) is False:
             raise MissingIdError("Student with given id does not exist")
-        return self.__students[student_id]
+        return self.__repository.get_element(student_id)
+
+    def student_id_exists(self, student_id):
+        """
+        Checks if the given student id already exists
+        @param student_id: the id to check for
+        @return: True or False
+        """
+        return self.__repository.exists_element(student_id)
 
     def search(self, term: str):
         """
@@ -54,20 +61,10 @@ class StudentManager:
         """
         term = term.lower()
         results: List[Student] = []
-        for student in self.__students.values():
+        for student in self.__repository.get_all:
             if term in str(student.id) or term in student.name.lower():
                 results.append(student)
         return results
-
-    def student_id_exists(self, student_id):
-        """
-        Checks if the given student id already exists
-        @param student_id: the id to check for
-        @return: True or False
-        """
-        if self.__students.get(student_id) is None:
-            return False
-        return True
 
     @property
     def last_student_id(self):
@@ -75,10 +72,10 @@ class StudentManager:
         The Last Used student id
         @return: Just the id
         """
-        if len(self.__students.keys()) == 0:
+        if len(self.__repository.get_all) == 0:
             return 0
-        return list(self.__students.keys())[-1]
+        return sorted(self.__repository.get_all, key=lambda student: student.id)[-1].id
 
     @property
     def students(self):
-        return list(self.__students.values())
+        return sorted(self.__repository.get_all, key=lambda student: student.id, reverse=True)
