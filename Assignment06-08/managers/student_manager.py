@@ -2,11 +2,11 @@ from collections import OrderedDict
 from typing import Dict, List
 
 from errors import DuplicateIdError, MissingIdError
+from structures import FunctionCall, Operation
 from structures.student import Student
 
 
 class StudentManager:
-
     def __init__(self):
         self.__students: Dict[int, Student] = OrderedDict()
 
@@ -16,8 +16,13 @@ class StudentManager:
         @param student: The Student you want to add
         """
         if self.__students.get(student.id) is not None:
-            raise DuplicateIdError('Student Id already exists')
+            raise DuplicateIdError("Student Id already exists")
         self.__students[student.id] = student
+
+        self.__students = OrderedDict(sorted(self.__students.items(), key=lambda t: t[0]))
+        undo = FunctionCall(self.remove_student, student.id)
+        redo = FunctionCall(self.add_student, student)
+        return Operation(undo, redo)
 
     def remove_student(self, student_id: int):
         """
@@ -25,8 +30,11 @@ class StudentManager:
         @param student_id: The Student object with the id you want to remove
         """
         if self.__students.get(student_id) is None:
-            raise MissingIdError('Student with given id does not exist')
-        self.__students.pop(student_id)
+            raise MissingIdError("Student with given id does not exist")
+        student = self.__students.pop(student_id)
+        undo = FunctionCall(self.add_student, student)
+        redo = FunctionCall(self.remove_student, student_id)
+        return Operation(undo, redo)
 
     def retrieve_student(self, student_id: int):
         """
@@ -35,7 +43,7 @@ class StudentManager:
         @return: The Student Object
         """
         if self.__students.get(student_id) is None:
-            raise MissingIdError('Student with given id does not exist')
+            raise MissingIdError("Student with given id does not exist")
         return self.__students[student_id]
 
     def search(self, term: str):

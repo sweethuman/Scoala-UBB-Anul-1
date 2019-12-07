@@ -4,3 +4,7 @@ class DuplicateIdError(Exception):
 
 class MissingIdError(Exception):
     pass
+
+
+class RepositoryError(Exception):
+    pass

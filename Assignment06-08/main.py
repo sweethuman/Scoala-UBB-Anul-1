@@ -1,3 +1,4 @@
+from controllers import UndoController
 from managers import StudentManager, DisciplineManager, GradeManager
 from structures import Student, Discipline, Grade
 from ui import UI
@@ -47,7 +48,8 @@ def main():
     student_manager = StudentManager()
     discipline_manager = DisciplineManager()
     grade_manager = GradeManager(student_manager, discipline_manager)
-    ui = UI(student_manager, discipline_manager, grade_manager)
+    undo_controller = UndoController()
+    ui = UI(student_manager, discipline_manager, grade_manager, undo_controller)
     add_student_test_data(student_manager)
     add_discipline_test_data(discipline_manager)
     add_grade_test_data(grade_manager)

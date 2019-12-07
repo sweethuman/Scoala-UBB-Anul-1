@@ -3,6 +3,7 @@ from typing import Dict, List
 
 from errors import DuplicateIdError, MissingIdError
 from structures.discipline import Discipline
+from structures import Operation, FunctionCall
 
 
 class DisciplineManager:
@@ -10,7 +11,7 @@ class DisciplineManager:
     def __init__(self):
         self.__disciplines: Dict[int, Discipline] = OrderedDict()
 
-    def add_discipline(self, discipline: Discipline):
+    def add_discipline(self, discipline: Discipline) -> Operation:
         """
         Adds a discipline, if id already exists throws a L{DuplicateIdError}
         @param discipline: The Discipline you want to add
@@ -18,15 +19,22 @@ class DisciplineManager:
         if self.__disciplines.get(discipline.id) is not None:
             raise DuplicateIdError('Discipline Id already exists')
         self.__disciplines[discipline.id] = discipline
+        self.__disciplines = OrderedDict(sorted(self.__disciplines.items(), key=lambda t: t[0]))
+        undo = FunctionCall(self.remove_discipline, discipline.id)
+        redo = FunctionCall(self.add_discipline, discipline)
+        return Operation(undo, redo)
 
-    def remove_discipline(self, discipline_id: int):
+    def remove_discipline(self, discipline_id: int) -> Operation:
         """
         Removes a discipline, if id doesn't exist it throws a L{MissingIdError}
         @param discipline_id: The Discipline with the id you want to remove
         """
         if self.__disciplines.get(discipline_id) is None:
             raise MissingIdError('Discipline with given id does not exist')
-        self.__disciplines.pop(discipline_id)
+        discipline = self.__disciplines.pop(discipline_id)
+        undo = FunctionCall(self.add_discipline, discipline)
+        redo = FunctionCall(self.remove_discipline, discipline_id)
+        return Operation(undo, redo)
 
     def retrieve_discipline(self, discipline_id: int):
         """

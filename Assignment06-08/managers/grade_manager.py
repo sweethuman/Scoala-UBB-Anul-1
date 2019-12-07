@@ -3,7 +3,7 @@ from typing import List, Dict, Tuple
 from errors import MissingIdError
 from managers.discipline_manager import DisciplineManager
 from managers.student_manager import StudentManager
-from structures.grade import Grade
+from structures import Grade, Operation, FunctionCall, CascadedOperation
 
 
 class GradeManager:
@@ -36,7 +36,7 @@ class GradeManager:
         """
         return self.__students[student_id]
 
-    def add_grade(self, grade: Grade):
+    def add_grade(self, grade: Grade) -> Operation:
         """
         Adds a grade, if the Student Id or Discipline Id does not exist it throws a L{MissingIdError}
         @param grade: The Grade object you want to add
@@ -51,24 +51,42 @@ class GradeManager:
             self.__students[grade.student_id] = []
         self.__disciplines[grade.discipline_id].append(grade)
         self.__students[grade.student_id].append(grade)
+        undo = FunctionCall(self.__remove_any_grades, grade)
+        redo = FunctionCall(self.add_grade, grade)
+        return Operation(undo, redo)
 
-    def remove_all_discipline_grades(self, discipline_id):
+    def remove_all_discipline_grades(self, discipline_id) -> Operation:
         """
         Remove all the grades of a discipline
         @param discipline_id: The Discipline Id
         """
         grades = self.__disciplines.pop(discipline_id)
-        for x in grades:
-            self.__students[x.student_id].remove(x)
+        operations = []
+        for grade in grades:
+            undo = FunctionCall(self.add_grade, grade)
+            redo = FunctionCall(self.__remove_any_grades, grade)
+            operations.append(Operation(undo, redo))
+            self.__students[grade.student_id].remove(grade)
+        return CascadedOperation(*operations)
 
-    def remove_all_student_grades(self, student_id):
+    def remove_all_student_grades(self, student_id) -> Operation:
         """
         Remove all the grades of a student
         @param student_id: The Student Id
         """
         grades = self.__students.pop(student_id)
-        for x in grades:
-            self.__disciplines[x.discipline_id].remove(x)
+        operations = []
+        for grade in grades:
+            undo = FunctionCall(self.add_grade, grade)
+            redo = FunctionCall(self.__remove_any_grades, grade)
+            operations.append(Operation(undo, redo))
+            self.__disciplines[grade.discipline_id].remove(grade)
+        return CascadedOperation(*operations)
+
+    def __remove_any_grades(self, *grades: Grade) -> None:
+        for grade in grades:
+            self.__disciplines[grade.discipline_id].remove(grade)
+            self.__students[grade.student_id].remove(grade)
 
     def failing_students_ids(self):
         """
