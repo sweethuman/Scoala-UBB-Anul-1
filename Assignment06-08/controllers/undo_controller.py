@@ -1,5 +1,6 @@
-from structures import Operation
 from typing import List
+
+from structures import Operation
 
 
 class UndoController:

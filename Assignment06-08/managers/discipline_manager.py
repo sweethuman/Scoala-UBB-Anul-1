@@ -1,10 +1,9 @@
-from collections import OrderedDict
-from typing import Dict, List
+from typing import List
 
 from errors import DuplicateIdError, MissingIdError
-from structures.discipline import Discipline
-from structures import Operation, FunctionCall
 from repositories import Repository
+from structures import Operation, FunctionCall
+from structures.discipline import Discipline
 
 
 class DisciplineManager:

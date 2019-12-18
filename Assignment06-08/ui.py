@@ -1,5 +1,6 @@
 from typing import List, Union
 
+from controllers import UndoController
 from errors import MissingIdError
 from managers.discipline_manager import DisciplineManager
 from managers.grade_manager import GradeManager
@@ -12,8 +13,6 @@ from structures import (
     FunctionCall,
     Operation,
 )
-from controllers import UndoController
-import PyQt5
 
 
 class UI:
@@ -131,11 +130,11 @@ class UI:
                         student = self.student_manager.retrieve_student(read_id)
                         read_name = input("Enter new student Name:")
 
-                        def set_name(student: Student, name: str):
+                        def set_student_name(student: Student, name: str):
                             student.name = name
 
-                        undo = FunctionCall(set_name, student, student.name)
-                        redo = FunctionCall(set_name, student, read_name)
+                        undo = FunctionCall(set_student_name, student, student.name)
+                        redo = FunctionCall(set_student_name, student, read_name)
                         self.undo_controller.record_operation(Operation(undo, redo))
                         student.name = read_name
                         print("Student Updated")
@@ -152,11 +151,11 @@ class UI:
                         discipline = self.discipline_manager.retrieve_discipline(read_id)
                         read_name = input("Enter new discipline Name:")
 
-                        def set_name(discipline: Discipline, name: str):
+                        def set_discipline_name(discipline: Discipline, name: str):
                             discipline.name = name
 
-                        undo = FunctionCall(set_name, discipline, discipline.name)
-                        redo = FunctionCall(set_name, discipline, read_name)
+                        undo = FunctionCall(set_discipline_name, discipline, discipline.name)
+                        redo = FunctionCall(set_discipline_name, discipline, read_name)
                         self.undo_controller.record_operation(Operation(undo, redo))
                         discipline.name = read_name
                         print("Discipline Updated")

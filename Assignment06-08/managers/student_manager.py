@@ -1,10 +1,9 @@
-from collections import OrderedDict
-from typing import Dict, List
+from typing import List
 
 from errors import DuplicateIdError, MissingIdError
+from repositories import Repository
 from structures import FunctionCall, Operation
 from structures.student import Student
-from repositories import Repository
 
 
 class StudentManager:
