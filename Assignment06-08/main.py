@@ -1,8 +1,8 @@
 from controllers import UndoController
-from managers import StudentManager, DisciplineManager, GradeManager
+from managers import StudentManager, DisciplineManager, GradeManager, FileGradeManager, PickleGradeManager
 from structures import Student, Discipline, Grade
 from ui import UI
-from repositories import Repository
+from repositories import Repository, FileRepository, PickleRepository
 
 
 def add_student_test_data(student_manager: StudentManager):
@@ -45,17 +45,60 @@ def add_grade_test_data(grade_manager: GradeManager):
     grade_manager.add_grade(Grade(2, 1, 2))
 
 
+def read_config():
+    config = {}
+    with open("settings.properties") as file:
+        for line in file:
+            line = line.strip()
+            options = line.split("=")
+            options[0] = options[0].strip()
+            options[1] = options[1].strip()
+            options[1] = options[1].strip('"')
+            config[options[0]] = options[1]
+    return config
+
+
+def process_config(config: dict):
+    if config["repository"] == "inmemory":
+        student_repo: Repository[Student, int] = Repository(Student, int, lambda student: student.id)
+        student_manager = StudentManager(student_repo)
+        discipline_repo: Repository[Discipline, int] = Repository(Discipline, int, lambda discipline: discipline.id)
+        discipline_manager = DisciplineManager(discipline_repo)
+        grade_manager = GradeManager(student_manager, discipline_manager)
+        add_student_test_data(student_manager)
+        add_discipline_test_data(discipline_manager)
+        add_grade_test_data(grade_manager)
+    elif config["repository"] == "textfile":
+        student_repo: Repository[Student, int] = FileRepository(
+            Student, int, lambda student: student.id, config["students"]
+        )
+        student_manager = StudentManager(student_repo)
+        discipline_repo: Repository[Discipline, int] = FileRepository(
+            Discipline, int, lambda discipline: discipline.id, config["disciplines"]
+        )
+        discipline_manager = DisciplineManager(discipline_repo)
+        grade_manager = FileGradeManager(student_manager, discipline_manager, config["grades"])
+    elif config["repository"] == "binaryfiles":
+        student_repo: Repository[Student, int] = PickleRepository(
+            Student, int, lambda student: student.id, config["students"]
+        )
+        student_manager = StudentManager(student_repo)
+        discipline_repo: Repository[Discipline, int] = PickleRepository(
+            Discipline, int, lambda discipline: discipline.id, config["disciplines"]
+        )
+        discipline_manager = DisciplineManager(discipline_repo)
+        grade_manager = PickleGradeManager(student_manager, discipline_manager, config["grades"])
+    else:
+        raise AttributeError("Invalid Config File!")
+
+    return student_manager, discipline_manager, grade_manager
+
+
 def main():
-    student_repo: Repository[Student, int] = Repository(Student, int, lambda student: student.id)
-    student_manager = StudentManager(student_repo)
-    discipline_repo: Repository[Discipline, int] = Repository(Discipline, int, lambda discipline: discipline.id)
-    discipline_manager = DisciplineManager(discipline_repo)
-    grade_manager = GradeManager(student_manager, discipline_manager)
+    config = read_config()
+    student_manager, discipline_manager, grade_manager = process_config(config)
     undo_controller = UndoController()
     ui = UI(student_manager, discipline_manager, grade_manager, undo_controller)
-    add_student_test_data(student_manager)
-    add_discipline_test_data(discipline_manager)
-    add_grade_test_data(grade_manager)
     ui.executioner()
 
 

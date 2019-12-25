@@ -1,4 +1,4 @@
-# TODO grade can't be bigger than 10 or smaller than 0
+from typing import List
 
 
 class Grade:
@@ -22,3 +22,12 @@ class Grade:
     @grade_value.setter
     def grade_value(self, value: float):
         self.__grade_value = value
+
+    @staticmethod
+    def write_to_file(element: "Grade") -> List[str]:
+        text = [str(element.discipline_id), str(element.student_id), str(element.grade_value)]
+        return text
+
+    @staticmethod
+    def read_from_file(*args: str) -> "Grade":
+        return Grade(int(args[0]), int(args[1]), float(args[2]))

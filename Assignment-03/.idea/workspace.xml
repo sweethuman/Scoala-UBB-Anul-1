@@ -2,25 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="41d7c84d-74c2-4f03-b031-5d7b5c8eb3ee" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../Assignment06-08/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Assignment06-08/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Assignment06-08/.idea/Assignment06-08.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Assignment06-08/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Assignment06-08/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Assignment06-08/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Assignment06-08/.idea/mypy.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Assignment06-08/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Assignment06-08/discipline.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Assignment06-08/discipline_manager.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Assignment06-08/errors.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Assignment06-08/grade.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Assignment06-08/grade_manager.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Assignment06-08/main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Assignment06-08/mypy.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Assignment06-08/services.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Assignment06-08/student.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Assignment06-08/student_manager.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Assignment06-08/ui.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assignment-01/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment-01/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assignment-02/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment-02/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -176,6 +159,8 @@
       <workItem from="1572526839647" duration="710000" />
       <workItem from="1572701105739" duration="65000" />
       <workItem from="1574094089326" duration="18000" />
+      <workItem from="1577002055367" duration="41000" />
+      <workItem from="1577002221169" duration="474000" />
     </task>
     <servers />
   </component>
@@ -199,9 +184,10 @@
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
     <state x="732" y="217" width="446" height="672" key="#com.jetbrains.python.refactoring.move.PyMoveModuleMembersDialog/0.28.1920.1052@0.28.1920.1052" timestamp="1572331033481" />
-    <state x="738" y="283" width="424" height="482" key="FileChooserDialogImpl" timestamp="1572701167900">
-      <screen x="0" y="28" width="1920" height="1052" />
+    <state x="737" y="240" width="424" height="482" key="FileChooserDialogImpl" timestamp="1577002095528">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
+    <state x="737" y="240" key="FileChooserDialogImpl/0.0.1920.1080@0.0.1920.1080" timestamp="1577002095528" />
     <state x="738" y="283" width="424" height="482" key="FileChooserDialogImpl/0.28.1920.1052@0.28.1920.1052" timestamp="1572701167900" />
     <state width="1870" height="424" key="GridCell.Tab.0.bottom" timestamp="1572352147898">
       <screen x="0" y="28" width="1920" height="1052" />
@@ -249,9 +235,10 @@
     </state>
     <state x="712" y="399" key="cloudConfig.SelfSettingsDialog/0.28.1920.1052@0.28.1920.1052" timestamp="1572275895209" />
     <state x="742" y="399" width="474" height="308" key="cloudConfig.SelfSettingsDialog/48.28.1872.1052@48.28.1872.1052" timestamp="1572190720514" />
-    <state x="606" y="381" key="com.intellij.ide.util.TipDialog" timestamp="1572701109555">
-      <screen x="0" y="28" width="1920" height="1052" />
+    <state x="605" y="340" key="com.intellij.ide.util.TipDialog" timestamp="1577002063793">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
+    <state x="605" y="340" key="com.intellij.ide.util.TipDialog/0.0.1920.1080@0.0.1920.1080" timestamp="1577002063793" />
     <state x="606" y="381" key="com.intellij.ide.util.TipDialog/0.28.1920.1052@0.28.1920.1052" timestamp="1572701109555" />
     <state x="639" y="381" key="com.intellij.ide.util.TipDialog/48.28.1872.1052@48.28.1872.1052" timestamp="1572190742816" />
     <state x="598" y="248" width="723" height="556" key="find.popup" timestamp="1572271865911">

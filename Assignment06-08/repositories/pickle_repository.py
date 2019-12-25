@@ -2,11 +2,13 @@ from typing import Type, Callable, TypeVar, List, Generic
 
 from repositories.repository import Repository, KeyType
 from protocols import FileStorable
+import pickle
+import os
 
 RepoType = TypeVar("RepoType", bound=FileStorable)
 
 
-class FileRepository(Repository, Generic[RepoType]):
+class PickleRepository(Repository, Generic[RepoType]):
     def __init__(
         self, repo_type: Type[RepoType], key_type: Type[KeyType], key: Callable[[RepoType], KeyType], file_name: str
     ):
@@ -15,20 +17,17 @@ class FileRepository(Repository, Generic[RepoType]):
         self.__load()
 
     def __load(self):
-        with open(self._file_name) as file:
-            for line in file:
-                line = line.strip()
-                args = line.split(",")
-                element = self._repo_type.read_from_file(*args)
-                super().add_element(element)
+        if (
+            not os.path.exists(os.getcwd() + "/" + self._file_name)
+            or os.path.getsize(os.getcwd() + "/" + self._file_name) == 0
+        ):
+            return
+        with open(self._file_name, "rb") as file:
+            self._items = pickle.load(file)
 
     def __write_to_file(self):
-        with open(self._file_name, "w") as file:
-            for element in self._items.values():
-                args: List[str] = self._repo_type.write_to_file(element)
-                line = ",".join(args)
-                file.write(line)
-                file.write("\n")
+        with open(self._file_name, "wb") as file:
+            pickle.dump(self._items, file)
 
     def add_element(self, element: RepoType):
         super().add_element(element)

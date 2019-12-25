@@ -7,16 +7,15 @@ from structures import Grade, Operation, FunctionCall, CascadedOperation
 
 
 class GradeManager:
-
     def __init__(self, student_manager: StudentManager, discipline_manager: DisciplineManager):
         self.student_manager = student_manager
         self.discipline_manager = discipline_manager
-        self.__disciplines: Dict[int, List[Grade]] = {}
-        self.__students: Dict[int, List[Grade]] = {}
+        self._disciplines: Dict[int, List[Grade]] = {}
+        self._students: Dict[int, List[Grade]] = {}
 
     @property
     def grades(self):
-        return [item for sublist in self.__disciplines.values() for item in sublist]
+        return [item for sublist in self._disciplines.values() for item in sublist]
 
     # Raises KeyError if key doesn't exist
     def get_discipline_grades(self, discipline_id):
@@ -25,7 +24,7 @@ class GradeManager:
         @param discipline_id: The Id of the discipline
         @return: A List of Grades
         """
-        return self.__disciplines[discipline_id]
+        return self._disciplines[discipline_id]
 
     # Raises KeyError if key doesn't exist
     def get_student_grades(self, student_id):
@@ -34,7 +33,7 @@ class GradeManager:
         @param student_id: The Id of the student
         @return: A List of Grades
         """
-        return self.__students[student_id]
+        return self._students[student_id]
 
     def add_grade(self, grade: Grade) -> Operation:
         """
@@ -42,16 +41,16 @@ class GradeManager:
         @param grade: The Grade object you want to add
         """
         if not self.student_manager.student_id_exists(grade.student_id):
-            raise MissingIdError('Student with given id does not exist!')
+            raise MissingIdError("Student with given id does not exist!")
         if not self.discipline_manager.discipline_id_exists(grade.discipline_id):
-            raise MissingIdError('Discipline with given id does not exist!')
-        if self.__disciplines.get(grade.discipline_id) is None:
-            self.__disciplines[grade.discipline_id] = []
-        if self.__students.get(grade.student_id) is None:
-            self.__students[grade.student_id] = []
-        self.__disciplines[grade.discipline_id].append(grade)
-        self.__students[grade.student_id].append(grade)
-        undo = FunctionCall(self.__remove_any_grades, grade)
+            raise MissingIdError("Discipline with given id does not exist!")
+        if self._disciplines.get(grade.discipline_id) is None:
+            self._disciplines[grade.discipline_id] = []
+        if self._students.get(grade.student_id) is None:
+            self._students[grade.student_id] = []
+        self._disciplines[grade.discipline_id].append(grade)
+        self._students[grade.student_id].append(grade)
+        undo = FunctionCall(self._remove_any_grades, grade)
         redo = FunctionCall(self.add_grade, grade)
         return Operation(undo, redo)
 
@@ -60,13 +59,13 @@ class GradeManager:
         Remove all the grades of a discipline
         @param discipline_id: The Discipline Id
         """
-        grades = self.__disciplines.pop(discipline_id)
+        grades = self._disciplines.pop(discipline_id)
         operations = []
         for grade in grades:
             undo = FunctionCall(self.add_grade, grade)
-            redo = FunctionCall(self.__remove_any_grades, grade)
+            redo = FunctionCall(self._remove_any_grades, grade)
             operations.append(Operation(undo, redo))
-            self.__students[grade.student_id].remove(grade)
+            self._students[grade.student_id].remove(grade)
         return CascadedOperation(*operations)
 
     def remove_all_student_grades(self, student_id) -> Operation:
@@ -74,19 +73,19 @@ class GradeManager:
         Remove all the grades of a student
         @param student_id: The Student Id
         """
-        grades = self.__students.pop(student_id)
+        grades = self._students.pop(student_id)
         operations = []
         for grade in grades:
             undo = FunctionCall(self.add_grade, grade)
-            redo = FunctionCall(self.__remove_any_grades, grade)
+            redo = FunctionCall(self._remove_any_grades, grade)
             operations.append(Operation(undo, redo))
-            self.__disciplines[grade.discipline_id].remove(grade)
+            self._disciplines[grade.discipline_id].remove(grade)
         return CascadedOperation(*operations)
 
-    def __remove_any_grades(self, *grades: Grade) -> None:
+    def _remove_any_grades(self, *grades: Grade) -> None:
         for grade in grades:
-            self.__disciplines[grade.discipline_id].remove(grade)
-            self.__students[grade.student_id].remove(grade)
+            self._disciplines[grade.discipline_id].remove(grade)
+            self._students[grade.student_id].remove(grade)
 
     def failing_students_ids(self):
         """
@@ -94,9 +93,9 @@ class GradeManager:
         @return: A List of Ids
         """
         failing_student_ids: List[int] = []
-        for student_id in self.__students:
+        for student_id in self._students:
             discipline_values: Dict[int, List[int]] = {}
-            for grade in self.__students[student_id]:
+            for grade in self._students[student_id]:
                 stored_grades = discipline_values.get(grade.discipline_id)
                 if stored_grades is None:
                     discipline_values[grade.discipline_id] = []
@@ -119,9 +118,9 @@ class GradeManager:
         @return: A List of Tuples with the student id and their average grade
         """
         best_students_ids: List[Tuple[int, float]] = []
-        for student_id in self.__students:
+        for student_id in self._students:
             discipline_values: Dict[int, List[int]] = {}
-            for grade in self.__students[student_id]:
+            for grade in self._students[student_id]:
                 stored_grades = discipline_values.get(grade.discipline_id)
                 if stored_grades is None:
                     discipline_values[grade.discipline_id] = []
@@ -149,8 +148,8 @@ class GradeManager:
         @return: A List of Tuples with the discipline id and it's average grade
         """
         best_discipline_ids: List[Tuple[int, float]] = []
-        for discipline_id in self.__disciplines:
-            discipline_values: List[float] = [grade.grade_value for grade in self.__disciplines[discipline_id]]
+        for discipline_id in self._disciplines:
+            discipline_values: List[float] = [grade.grade_value for grade in self._disciplines[discipline_id]]
             sumx = 0
             for grade_value in discipline_values:
                 sumx += grade_value

@@ -1,0 +1,10 @@
+1,Analiza Matematica
+2,Fizica Avansata
+3,Teoria Muzicii
+4,Fundamentele Programarii
+5,Logica Ilogica
+6,Filozofie
+7,Fundamentele Psihologiei
+8,Analiza Astrelor
+9,Prezicerea Viitorului
+10,Dezvoltarea tehnicilor de cunoastere persoanala
