@@ -6,7 +6,6 @@ authors = ["sweethuman <hackscomicon@yahoo.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
-pygame = "^1.9.6"
 console = "^0.98"
 readchar = "^2.0.1"
 
