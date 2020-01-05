@@ -25,6 +25,7 @@ class Service:
     def ai_turn(self):
         self.game_data.current_selected_column = random.randrange(0, self.game_data.width)
         self.use_turn()
+        self.game_data.current_selected_column = 0
 
     def move_selector(self, direction: Direction):
         if direction == Direction.RIGHT:
