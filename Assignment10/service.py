@@ -1,6 +1,7 @@
 from enums import Chip, Direction
 from typing import List
 from game_data import GameData
+import random
 
 
 class Service:
@@ -20,6 +21,10 @@ class Service:
         if hit_break:
             self._check_winner()
             self.game_data.currentPlayer = Chip.RED if self.game_data.currentPlayer == Chip.YELLOW else Chip.YELLOW
+
+    def ai_turn(self):
+        self.game_data.current_selected_column = random.randrange(0, self.game_data.width)
+        self.use_turn()
 
     def move_selector(self, direction: Direction):
         if direction == Direction.RIGHT:

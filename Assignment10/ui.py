@@ -68,6 +68,8 @@ class UI:
                     break
                 elif key == readchar.key.SPACE:
                     self.service.use_turn()
+                    if not self.game_data.ended:
+                        self.service.ai_turn()
                     break
         print("\n\n\n")
         if self.game_data.winner == Chip.RED:
