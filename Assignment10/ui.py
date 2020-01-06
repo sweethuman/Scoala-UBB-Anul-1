@@ -40,12 +40,11 @@ class UI:
         return "".join(buffer)
 
     def print_chip(self, chip: Chip) -> str:
-        if chip == Chip.EMPTY:
-            return "   "
-        elif chip == Chip.RED:
+        if chip == Chip.RED:
             return fg.red + " ■ " + fg.default
         elif chip == Chip.YELLOW:
             return fg.yellow + " ■ " + fg.default
+        return "   "
 
     def print_horizontal_delimiter(self) -> str:
         return "".join([fx.bold + "----" + fx.default for i in range(self.game_data.width)])

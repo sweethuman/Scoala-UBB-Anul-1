@@ -3,6 +3,10 @@ from typing import List
 
 
 class GameData:
+    """
+    Holds all the data used for the game, just like a repository
+    """
+
     height: int
     width: int
     currentPlayer: Chip
@@ -20,6 +24,10 @@ class GameData:
         self.ended = False
 
     def _populate_board(self):
+        """
+        Populates the Board variable with empty spaces
+        @return:
+        """
         self.board = []
         for i in range(6):
             new_row: List[Chip] = []
