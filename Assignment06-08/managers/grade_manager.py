@@ -4,14 +4,15 @@ from errors import MissingIdError
 from managers.discipline_manager import DisciplineManager
 from managers.student_manager import StudentManager
 from structures import Grade, Operation, FunctionCall, CascadedOperation
+from data_types import Dictionary, gnome_sort
 
 
 class GradeManager:
     def __init__(self, student_manager: StudentManager, discipline_manager: DisciplineManager):
         self.student_manager = student_manager
         self.discipline_manager = discipline_manager
-        self._disciplines: Dict[int, List[Grade]] = {}
-        self._students: Dict[int, List[Grade]] = {}
+        self._disciplines: Dictionary[int, List[Grade]] = Dictionary()
+        self._students: Dictionary[int, List[Grade]] = Dictionary()
 
     @property
     def grades(self):
@@ -139,7 +140,13 @@ class GradeManager:
                 sumx += average
             sumx = sumx / len(average_grades)
             best_students_ids.append((student_id, sumx))
-        best_students_ids.sort(key=lambda value: value[1], reverse=True)
+
+        def comp_students(x, y):
+            if x[1] > y[1]:
+                return True
+            return False
+
+        gnome_sort(best_students_ids, comp_students)
         return best_students_ids
 
     def best_disciplines_ids(self):

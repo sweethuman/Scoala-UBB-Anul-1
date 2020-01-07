@@ -13,6 +13,7 @@ from structures import (
     FunctionCall,
     Operation,
 )
+from data_types import my_filter
 
 
 class UI:
@@ -42,6 +43,7 @@ class UI:
             "8. See Statistics \n"
             "9. Undo \n"
             "10. Redo \n"
+            "11. Show Students where Id is Odd \n"
         )
 
     @staticmethod
@@ -254,6 +256,14 @@ class UI:
                     self.undo_controller.redo()
                 except IndexError:
                     print("Redo History is empty!")
+            elif read_input == "11":
+
+                def is_id_odd(obj: Student):
+                    if obj.id % 2 == 1:
+                        return True
+                    return False
+
+                self.print_students_disciplines(my_filter(self.student_manager.students, is_id_odd))
 
     def read_student(self):
         read_name = input("Enter student name: ")

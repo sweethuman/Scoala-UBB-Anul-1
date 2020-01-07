@@ -1,5 +1,6 @@
 from errors import RepositoryError
 from typing import Callable, TypeVar, Dict, Type, Generic, Hashable, Union, List
+from data_types import Dictionary
 
 RepoType = TypeVar("RepoType")
 KeyType = TypeVar("KeyType", bound=Union[int, str, tuple, Hashable])
@@ -7,7 +8,7 @@ KeyType = TypeVar("KeyType", bound=Union[int, str, tuple, Hashable])
 
 class Repository(Generic[RepoType, KeyType]):
     def __init__(self, repo_type: Type[RepoType], key_type: Type[KeyType], key: Callable[[RepoType], KeyType]):
-        self._items: Dict[KeyType, RepoType] = {}
+        self._items: Dictionary[KeyType, RepoType] = Dictionary()
         self._key = key
         self._repo_type = repo_type
         self._key_type = key_type
