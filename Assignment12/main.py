@@ -7,6 +7,7 @@ posibilities = [1, 2, 5]
 def calculate_coin_payment(sumix: int, options: List[int], combination: List[int], current_pos):
     if sum(combination) == sumix:
         print(combination)
+        return
     elif sum(combination) > sumix:
         return
     for i in range(current_pos, len(options)):
@@ -17,10 +18,10 @@ def calculate_coin_payment(sumix: int, options: List[int], combination: List[int
 
 calculate_coin_payment(11, posibilities, [], 0)
 print('')
-stack = [[[], 0]]
 
 
 def calculate_coin_payment_iteratively(sumix: int, options: List[int]):
+    stack = [[[], 0]]
     while len(stack) != 0:
         current = stack.pop()
         for i in range(current[1], len(options)):
